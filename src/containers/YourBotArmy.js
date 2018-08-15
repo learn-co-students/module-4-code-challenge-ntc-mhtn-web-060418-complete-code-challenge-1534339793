@@ -6,7 +6,7 @@ class YourBotArmy extends React.Component {
 
   mapBots = () =>
     this.props.bots.map(bot => (
-      <BotCard bot={bot} onClick={this.props.removeBot} />
+      <BotCard key={bot.id} bot={bot} onClick={this.props.removeBot} />
     ));
 
   render() {

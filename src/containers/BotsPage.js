@@ -1,13 +1,16 @@
 import React from "react";
 import BotCollection from "./BotCollection";
 import YourBotArmy from "./YourBotArmy";
+import Filter from "../components/Filter";
 
 class BotsPage extends React.Component {
   //start here with your code for step one
 
   state = {
     allBots: [],
-    yourBots: []
+    yourBots: [],
+    filteredBots: [],
+    searchTerm: {}
   };
 
   findBotFromAll = id => {
@@ -35,17 +38,31 @@ class BotsPage extends React.Component {
   componentDidMount() {
     fetch("https://bot-battler-api.herokuapp.com/api/v1/bots")
       .then(response => response.json())
-      .then(data => this.setState({ allBots: data }));
+      .then(data => this.setState({ allBots: data, filteredBots: data }));
   }
+
+  filterBotsByType = value => {
+    let filteredBots = this.state.allBots.filter(bot =>
+      bot.bot_class.includes(value)
+    );
+    this.setState({ filteredBots });
+  };
 
   render() {
     return (
       <div>
+        <Filter
+          filter={this.state.searchTerm}
+          filterBots={this.filterBotsByType}
+        />
         <YourBotArmy
           bots={this.state.yourBots}
           removeBot={this.removeBotFromArmy}
         />
-        <BotCollection bots={this.state.allBots} addBot={this.addBotToArmy} />
+        <BotCollection
+          bots={this.state.filteredBots}
+          addBot={this.addBotToArmy}
+        />
       </div>
     );
   }

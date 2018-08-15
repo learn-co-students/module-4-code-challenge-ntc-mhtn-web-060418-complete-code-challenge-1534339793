@@ -16,7 +16,9 @@ class BotCollection extends React.Component {
   };
 
   mapBots = () =>
-    this.props.bots.map(bot => <BotCard bot={bot} onClick={this.selectBot} />);
+    this.props.bots.map(bot => (
+      <BotCard key={bot.id} bot={bot} onClick={this.selectBot} />
+    ));
 
   resetState = () => this.setState({ selectedBot: null });
 
