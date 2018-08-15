@@ -75,8 +75,8 @@ class BotsPage extends React.Component {
   render() {
     return (
       <div>
-        <Filter filterBots={this.filterBots}/>
         <YourBotArmy handleRemove={this.handleRemove} enlistedBots={this.state.enlistedBots} />
+        <Filter filterBots={this.filterBots}/>
         {this.botSpecsToggle()}
       </div>
     );

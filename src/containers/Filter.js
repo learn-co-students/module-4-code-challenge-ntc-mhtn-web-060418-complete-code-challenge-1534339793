@@ -15,7 +15,10 @@ export default class Filter extends Component {
 
   render(){
     return (
-      <input value={this.state.searchTerm} onChange={this.handleSearch} />
+      <div className="search-flex">
+        <h3>Search for a Bot by name</h3>
+        <input value={this.state.searchTerm} onChange={this.handleSearch} />
+      </div>
     )
   }
 }
