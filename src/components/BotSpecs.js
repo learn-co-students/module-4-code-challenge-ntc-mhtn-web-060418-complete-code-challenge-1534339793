@@ -1,7 +1,7 @@
 import React from "react";
 
 const BotSpecs = props => {
-  let { bot } = props;
+  let { bot, showAllBots, enlistBot } = props;
 
   let botType;
 
@@ -61,17 +61,16 @@ const BotSpecs = props => {
             <button
               className="ui button fluid"
               onClick={() =>
-                console.log('connect this to a function that shows all bots')
+                showAllBots()
               }
             >
               Go Back
             </button>
             <button
               className="ui button fluid"
-              onClick={() =>
-                console.log(
-                  "connect this to a function that adds this bot to your bot army list"
-                )
+              onClick={() =>{enlistBot();
+              showAllBots()}
+
               }
             >
               Enlist
