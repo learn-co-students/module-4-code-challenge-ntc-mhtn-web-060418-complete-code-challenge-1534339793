@@ -52,6 +52,7 @@ class BotsPage extends React.Component {
     })
   }
 
+
   getData = () => {
     fetch('https://bot-battler-api.herokuapp.com/api/v1/bots').then(res=>res.json()).then(res => this.setState({
       bots: res,
