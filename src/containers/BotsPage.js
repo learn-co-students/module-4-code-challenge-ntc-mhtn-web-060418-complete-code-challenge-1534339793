@@ -9,7 +9,7 @@ class BotsPage extends React.Component {
     this.state = {
       bots: [],
       botsArmy: [],
-
+      view: 'collection',
     }
   }
 

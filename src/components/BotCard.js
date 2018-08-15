@@ -1,7 +1,7 @@
 import React from "react";
 
 const BotCard = props => {
-  const { bot, addBotToBotArmy } = props;
+  const { bot, showSpec } = props;
 
   let botType;
 
@@ -19,17 +19,19 @@ const BotCard = props => {
       botType = <div />;
   }
 
-  const handleClick = (event) => {
+  const handleSpecClick = (event) => {
     event.preventDefault()
-    addBotToBotArmy(bot)
+    showSpec(bot)
   }
+
+
 
   return (
     <div className="ui column">
       <div
         className="ui card"
         key={bot.id}
-        onClick={handleClick}
+        onClick={handleSpecClick}
       >
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} />
