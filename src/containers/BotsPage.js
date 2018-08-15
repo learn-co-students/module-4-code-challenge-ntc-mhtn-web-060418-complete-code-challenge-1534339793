@@ -1,37 +1,13 @@
 import React from "react";
-import BotCollection from './BotCollection'
 import YourBotArmy from './YourBotArmy'
-import BotSpecs from '../components/BotSpecs'
+import CollectionSpecContainer from './CollectionSpecContainer'
 
 class BotsPage extends React.Component {
   //start here with your code for step one
 
   state = {
     bots: [],
-    botSpecs: null,
     botArmy: []
-  }
-
-  loadBotSpecs = (id) => {
-    this.setState({
-      botSpecs: this.state.bots.find(bot => bot.id === id)
-    })
-  }
-
-  clearBotSpecs = () => {
-    this.setState({
-      botSpecs: null
-    })
-  }
-
-  collectionSpecs = () => {
-    if (this.state.botSpecs){
-      return (
-        <BotSpecs bot={this.state.botSpecs} addBotToArmy={this.addBotToArmy} clearBotSpecs={this.clearBotSpecs} />
-      )
-    } else {
-      return <BotCollection bots={this.state.bots} loadBotSpecs={this.loadBotSpecs} />
-    }
   }
 
   addBotToArmy = (id) => {
@@ -40,7 +16,7 @@ class BotsPage extends React.Component {
       newBotArmy.push(this.state.bots.find(bot => bot.id === id))
       this.setState({
         botArmy: newBotArmy
-      }, this.clearBotSpecs)
+      })
     }
   }
 
@@ -55,7 +31,7 @@ class BotsPage extends React.Component {
     return (
       <div>
         <YourBotArmy botArmy={this.state.botArmy} removeFromBotArmy={this.removeFromBotArmy} />
-        {this.collectionSpecs()}
+        <CollectionSpecContainer bots={this.state.bots} addBotToArmy={this.addBotToArmy} />
       </div>
     );
   }
