@@ -1,13 +1,15 @@
 import React from "react";
 import BotCollection from "./BotCollection";
 import YourBotArmy from "./YourBotArmy";
+import BotSpecs from "../components/BotSpecs";
+
 
 class BotsPage extends React.Component {
   //start here with your code for step one
-
   state = {
     bots: [],
-    usersBots: []
+    usersBots: [],
+    clickedBot: ''
   }
 
   componentDidMount() {
@@ -17,14 +19,34 @@ class BotsPage extends React.Component {
   }
 
   handleClick = (botId) => {
-    // console.log("clicked")
     let bot = this.state.bots.find(bot => bot.id === botId)
-    // console.log(bot)
-
     if(!this.state.usersBots.includes(bot)) {
       this.setState({
-        usersBots: [...this.state.usersBots, bot]
+        clickedBot: bot
       })
+    }
+  }
+
+  goBackClick = () => {
+    this.setState({
+      clickedBot: ''
+    })
+  }
+
+  enlistClick = (botId) => {
+    let bot = this.state.bots.find(bot => bot.id === botId)
+    this.setState({
+      usersBots: [...this.state.usersBots, bot],
+      clickedBot: ''
+    })
+
+  }
+
+  showView(){
+    if (this.state.clickedBot === '') {
+      return <BotCollection bots={this.state.bots} handleClick={this.handleClick} />
+    } else {
+      return <BotSpecs bot={this.state.clickedBot} enlistClick={this.enlistClick} goBackClick={this.goBackClick} /> 
     }
   }
 
@@ -33,7 +55,7 @@ class BotsPage extends React.Component {
       <div>
         {/* put your components here */}
         <YourBotArmy usersBots={this.state.usersBots} />
-        <BotCollection bots={this.state.bots} handleClick={this.handleClick} />
+        {this.showView()}
       </div>
     );
   }
