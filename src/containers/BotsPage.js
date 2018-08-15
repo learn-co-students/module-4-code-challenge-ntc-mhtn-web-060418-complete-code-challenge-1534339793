@@ -2,19 +2,23 @@ import React from "react";
 import BotCollection from "./BotCollection";
 import YourBotArmy from "./YourBotArmy";
 import BotSpecs from "../components/BotSpecs";
+import Sort from "../components/Sort";
 
 
 class BotsPage extends React.Component {
   //start here with your code for step one
   state = {
     bots: [],
+    botsCopy: [],
     usersBots: [],
-    clickedBot: ''
+    clickedBot: '',
+    sortBy: ''
   }
 
   componentDidMount() {
     fetch('https://bot-battler-api.herokuapp.com/api/v1/bots').then(resp => resp.json()).then(data => this.setState({
-      bots: data
+      bots: data,
+      botsCopy: data
     }))
   }
 
@@ -44,9 +48,29 @@ class BotsPage extends React.Component {
 
   showView(){
     if (this.state.clickedBot === '') {
-      return <BotCollection bots={this.state.bots} handleClick={this.handleClick} />
+      return <BotCollection bots={this.state.botsCopy} handleClick={this.handleClick} />
     } else {
       return <BotSpecs bot={this.state.clickedBot} enlistClick={this.enlistClick} goBackClick={this.goBackClick} /> 
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({
+      sortBy: event.target.value
+    })
+  }
+
+  handleSort = (event) => {
+    event.preventDefault()
+    let category = this.state.sortBy
+    if (category !== 'all'){
+    let newArr = this.state.bots.sort((a, b) => {return a[category] - b[category]})
+    this.setState({
+      botsCopy: newArr
+    }) } else {
+      this.setState({
+        botsCopy: this.state.bots        
+      })
     }
   }
 
@@ -54,6 +78,7 @@ class BotsPage extends React.Component {
     return (
       <div>
         {/* put your components here */}
+        <Sort handleChange={this.handleChange} handleSort={this.handleSort} />
         <YourBotArmy usersBots={this.state.usersBots} />
         {this.showView()}
       </div>
