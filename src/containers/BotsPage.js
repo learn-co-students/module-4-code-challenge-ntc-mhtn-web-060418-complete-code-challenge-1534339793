@@ -35,9 +35,7 @@ class BotsPage extends React.Component {
   componentDidMount() {
     fetch("https://bot-battler-api.herokuapp.com/api/v1/bots")
       .then(response => response.json())
-      .then(data =>
-        this.setState({ allBots: data }, () => console.log(this.state.allBots))
-      );
+      .then(data => this.setState({ allBots: data }));
   }
 
   render() {
