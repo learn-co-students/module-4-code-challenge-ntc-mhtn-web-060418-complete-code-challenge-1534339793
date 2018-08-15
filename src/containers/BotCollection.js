@@ -33,7 +33,13 @@ class BotCollection extends React.Component {
     })
   }
 
-
+  addBotToBotArmy = (bot) => {
+    this.props.addBotToBotArmy(bot)
+    this.setState({
+      view: 'collection',
+      specBot: '',
+    })
+  }
 
   renderView = () => {
     if (this.state.view === "collection") {
@@ -41,7 +47,7 @@ class BotCollection extends React.Component {
     } else if (this.state.view === "spec") {
       return <BotSpecs
       bot= {this.state.specBot}
-      addBotToBotArmy={this.props.addBotToBotArmy}
+      addBotToBotArmy={this.addBotToBotArmy}
       goBack={this.goBack}/>
     }
 
