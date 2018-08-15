@@ -1,7 +1,7 @@
 import React from "react";
 
 const BotSpecs = props => {
-  let { bot, addBotToBotArmy, goBack} = props;
+  let { bot, addBotToBotArmy, goBack, botsArmy} = props;
 
   let botType;
 
@@ -27,6 +27,29 @@ const BotSpecs = props => {
   const handleGoBackClick = (event) => {
     event.preventDefault()
     goBack()
+  }
+
+  const handleDelistClick = (event) => {
+    event.preventDefault()
+    addBotToBotArmy(bot)
+  }
+
+  const renderEnlistAndDelist = () => {
+    if(botsArmy.includes(bot)) {
+      return (
+        <button
+          className="ui button fluid"
+          onClick={handleDelistClick}
+        >Delist
+      </button>
+      )
+    } else {
+      return (<button
+        className="ui button fluid"
+        onClick={handleEnlistClick}
+      >Enlist
+    </button>)
+    }
   }
 
   return (
@@ -74,12 +97,7 @@ const BotSpecs = props => {
             >
               Go Back
             </button>
-            <button
-              className="ui button fluid"
-              onClick={handleEnlistClick}
-            >
-              Enlist
-            </button>
+            {renderEnlistAndDelist()}
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ class YourBotArmy extends React.Component {
   }
 
   showSpec = (bot) => {
-
+    this.props.showSpec(bot)
   }
 
   render(){

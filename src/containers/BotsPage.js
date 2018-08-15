@@ -10,6 +10,7 @@ class BotsPage extends React.Component {
       bots: [],
       botsArmy: [],
       view: 'collection',
+      specBot: '',
     }
   }
 
@@ -29,29 +30,53 @@ class BotsPage extends React.Component {
 
   addBotToBotArmy = (newBot) => {
     const updatedBotsArmy = this.state.botsArmy
-    updatedBotsArmy.push(newBot)
-
     const updatedBots = this.state.bots
 
-    const found = updatedBots.find((bot) => {
-      return bot.id === newBot.id
-    })
 
-    const index = updatedBots.indexOf(found)
-
-    updatedBots.splice(index, 1)
+    if (updatedBotsArmy.includes(newBot)) {
+      const index = updatedBotsArmy.indexOf(newBot)
+      updatedBots.push(newBot)
+      updatedBotsArmy.splice(index, 1)
+    } else {
+      const index = updatedBots.indexOf(newBot)
+      updatedBotsArmy.push(newBot)
+      updatedBots.splice(index, 1)
+    }
 
     this.setState({
       bots: updatedBots,
       botsArmy: updatedBotsArmy,
+      view: 'collection',
+      specBot: '',
+    })
+  }
+
+  showSpec = (bot) => {
+    this.setState({
+      view: 'spec',
+      specBot: bot,
+    })
+  }
+
+  goBack = () => {
+    this.setState({
+      view: 'collection',
+      specBot: ''
     })
   }
 
   render() {
     return (
       <div>
-        <YourBotArmy bots={this.state.botsArmy}/>
-        <BotCollection bots={this.state.bots} addBotToBotArmy={this.addBotToBotArmy}/>
+        <YourBotArmy
+        bots={this.state.botsArmy} showSpec={this.showSpec}
+        />
+        <BotCollection
+        {...this.state}
+        showSpec={this.showSpec}
+        goBack={this.goBack}
+        addBotToBotArmy={this.addBotToBotArmy}
+        />
       </div>
     );
   }
